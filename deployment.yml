@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tmg-vso-inventory-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tmg-vso-inventory-app
+  template:
+    metadata:
+      labels:
+        app: tmg-vso-inventory-app
+    spec:
+      containers:
+        - name: tmg-vso-inventory-app
+          image: de.icr.io/cic-tmg-ecommerce/vso-dev-inventory-backend-app
+          args:
+            - --spring.application.json=$(BINDING)
+          env:
+            - name: BINDING
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-properties
+                  key: application-properties
+            - name: DB_CONNECTION
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-properties
+                  key: DB_CONNECTION
+            - name: DB_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-properties
+                  key: DB_USERNAME
+            - name: DB_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-properties
+                  key: DB_PASSWORD
+          ports:
+            - containerPort: 8025
+          resources:
+            requests:
+              cpu: 125m
+              memory: 350Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tmg-vso-inventory-service-cip
+  labels:
+    app: tmg-vso-inventory-app
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 8025
+  selector:
+    app: tmg-vso-inventory-app
