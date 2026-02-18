@@ -9,8 +9,8 @@
     <artifactId>loveResale-inventory</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>homefly-inventory</name>
-    <description>homefly-inventory</description>
+    <name>loveresale-inventory</name>
+    <description>loveresale-inventory</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
