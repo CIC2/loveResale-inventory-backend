@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: resale-inventory-app
+  namespace: dev-resale
 spec:
   replicas: 1
   selector:
@@ -12,9 +13,11 @@ spec:
       labels:
         app: resale-inventory-app
     spec:
+      imagePullSecrets:
+        - name: icr-secret
       containers:
         - name: resale-inventory-app
-          image: de.icr.io/cic-tmg-ecommerce/loveresale-dev-inventory-backend-app
+          image: de.icr.io/dev-registry/loveresale-inventory-backend:latest
           args:
             - --spring.application.json=$(BINDING)
           env:
@@ -49,6 +52,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: resale-inventory-service-cip
+  namespace: dev-resale
   labels:
     app: resale-inventory-app
 spec:
