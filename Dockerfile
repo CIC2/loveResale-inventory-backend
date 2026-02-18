@@ -21,7 +21,7 @@ RUN apt-get update && apt-get install -y fontconfig libfreetype6 && rm -rf /var/
 
 WORKDIR /app
 
-COPY --from=build /build/target/homefly-inventory-0.0.1-SNAPSHOT.jar /app/app.jar
+COPY --from=build /build/target/loveresale-inventory-0.0.1-SNAPSHOT.jar /app/app.jar
 WORKDIR /app
 EXPOSE 8020
 ENTRYPOINT ["java", "-jar", "app.jar"]

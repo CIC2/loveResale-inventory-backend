@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tmg-vso-inventory-app
+  name: resale-inventory-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: tmg-vso-inventory-app
+      app: resale-inventory-app
   template:
     metadata:
       labels:
-        app: tmg-vso-inventory-app
+        app: resale-inventory-app
     spec:
       containers:
-        - name: tmg-vso-inventory-app
-          image: de.icr.io/cic-tmg-ecommerce/vso-dev-inventory-backend-app
+        - name: resale-inventory-app
+          image: de.icr.io/cic-tmg-ecommerce/loveresale-dev-inventory-backend-app
           args:
             - --spring.application.json=$(BINDING)
           env:
@@ -48,13 +48,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: tmg-vso-inventory-service-cip
+  name: resale-inventory-service-cip
   labels:
-    app: tmg-vso-inventory-app
+    app: resale-inventory-app
 spec:
   type: ClusterIP
   ports:
     - port: 80
       targetPort: 8025
   selector:
-    app: tmg-vso-inventory-app
+    app: resale-inventory-app
