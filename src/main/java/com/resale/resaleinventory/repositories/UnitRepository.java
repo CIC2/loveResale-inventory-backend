@@ -18,7 +18,7 @@ public interface UnitRepository extends JpaRepository<Unit, Integer> {
 
 
 @Query("""
-    SELECT new tmg.vso.components.unit.dto.UnitListDTO(
+    SELECT new com.resale.resaleinventory.components.unit.dto.UnitListDTO(
         u.id,
         p.id, p.nameEn, p.nameAr,
         p.code,
@@ -98,7 +98,7 @@ Page<UnitListDTO> findUnits(
 
 
     @Query("""
-    SELECT DISTINCT new tmg.vso.components.model.dto.ModelDTO(m.id, m.code, m.name)
+    SELECT DISTINCT new com.resale.resaleinventory.components.model.dto.ModelDTO(m.id, m.code, m.name)
     FROM Unit u
     JOIN Model m ON u.modelId = m.id
     WHERE (:locationId IS NULL OR u.projectId IN (
@@ -264,7 +264,7 @@ Page<UnitListDTO> findUnits(
 
 
     @Query("""
-    SELECT new tmg.vso.components.model.dto.ModelDetailsDTO(
+    SELECT new com.resale.resaleinventory.components.model.dto.ModelDetailsDTO(
         ut.name,
         l.id,
         l.nameEn,
@@ -290,7 +290,7 @@ Page<UnitListDTO> findUnits(
     ModelDetailsDTO findModelDetailsByUnitId(@Param("unitId") Integer unitId);
 
     @Query("""
-                SELECT new tmg.vso.components.model.dto.ModelByIdDTO(
+                SELECT new com.resale.resaleinventory.components.model.dto.ModelByIdDTO(
                     u.id,
                     m.id,
                     m.code,
@@ -375,7 +375,7 @@ Page<UnitListDTO> findUnits(
 
 
     @Query("""
-                SELECT new tmg.vso.components.unit.dto.UnitDetailsDTO(
+                SELECT new com.resale.resaleinventory.components.unit.dto.UnitDetailsDTO(
                     u.id,
                     ut.name, ut.nameAr,
                     u.deliveryText,
@@ -416,7 +416,7 @@ Page<UnitListDTO> findUnits(
 
 
     @Query("""
-    SELECT new tmg.vso.components.unit.dto.UnitListDTO(
+    SELECT new com.resale.resaleinventory.components.unit.dto.UnitListDTO(
         u.id,
         p.id,
         p.nameEn,
@@ -456,7 +456,7 @@ Page<UnitListDTO> findUnits(
 
 
     @Query("""
-    SELECT new tmg.vso.components.model.dto.ModelComparisonDTO(
+    SELECT new com.resale.resaleinventory.components.model.dto.ModelComparisonDTO(
         m.id,
         m.code,
         m.name,

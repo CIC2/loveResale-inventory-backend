@@ -16,7 +16,7 @@ public interface BusinessEntityRepository extends JpaRepository<BusinessEntity, 
 
 
     @Query("""
-        SELECT DISTINCT new tmg.vso.components.unit.dto.BusinessEntityDTO(b.id, b.code)
+        SELECT DISTINCT new com.resale.resaleinventory.components.unit.dto.BusinessEntityDTO(b.id, b.code)
         FROM BusinessEntity b
         WHERE (:projectIds IS NULL OR b.projectId IN :projectIds)
     """)

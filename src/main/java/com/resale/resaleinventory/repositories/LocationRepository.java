@@ -12,7 +12,7 @@ import java.util.List;
 public interface LocationRepository extends JpaRepository<Location, Integer> {
 
     @Query("""
-    SELECT new tmg.vso.components.location.dto.LocationDTO(
+    SELECT new com.resale.resaleinventory.components.location.dto.LocationDTO(
         l.id,
         l.nameEn,
         l.nameAr,

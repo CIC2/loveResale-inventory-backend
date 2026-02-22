@@ -15,13 +15,13 @@ import java.util.Optional;
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Integer> {
 
-    @Query("SELECT new tmg.vso.components.project.dto.ProjectDTO(p.id,p.code, p.nameEn, p.nameAr ) " +
+    @Query("SELECT new com.resale.resaleinventory.components.project.dto.ProjectDTO(p.id,p.code, p.nameEn, p.nameAr ) " +
             "FROM Project p WHERE p.locationId = :locationId")
     List<ProjectDTO> findProjectByLocationId(@Param("locationId") Integer locationId);
 
 
     @Query("""
-    SELECT new tmg.vso.components.project.dto.ProjectDTO(
+    SELECT new com.resale.resaleinventory.components.project.dto.ProjectDTO(
         p.id,
         p.nameEn,
         p.nameAr,
@@ -39,7 +39,7 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
 
 
     @Query("""
-    SELECT new tmg.vso.components.project.dto.ProjectDetailsDTO(
+    SELECT new com.resale.resaleinventory.components.project.dto.ProjectDetailsDTO(
         p.id,
         p.code,
         CASE WHEN :lang = 'en' THEN p.nameEn ELSE p.nameAr END,
@@ -70,7 +70,7 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
     List<Project> findByLocationId(Integer locationId);
 
     @Query("""
-    SELECT new tmg.vso.components.project.dto.ProjectDTO(
+    SELECT new com.resale.resaleinventory.components.project.dto.ProjectDTO(
         p.id,
         p.nameEn,
         p.nameAr,

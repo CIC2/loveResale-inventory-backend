@@ -14,7 +14,7 @@ public interface UsageTypeRepository extends JpaRepository<UsageType, Integer> {
 
 
     @Query("""
-        SELECT DISTINCT new tmg.vso.components.unit.dto.UsageTypeDTO(uT.id, uT.name, uT.nameAr)
+        SELECT DISTINCT new com.resale.resaleinventory.components.unit.dto.UsageTypeDTO(uT.id, uT.name, uT.nameAr)
         FROM Unit u
         JOIN UsageType uT ON u.usageTypeId = uT.id
         WHERE u.projectId IN :projectIds AND u.status = "AV_N"
