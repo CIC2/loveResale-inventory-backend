@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.resale.resaleinventory.components.unit.dto.CreateUnitRequestDTO;
 import com.resale.resaleinventory.components.unit.dto.UnitComparisonRequestDTO;
 import com.resale.resaleinventory.components.unit.dto.UnitDetailsDTO;
 import com.resale.resaleinventory.components.unit.dto.UnitListDTO;
@@ -159,6 +160,20 @@ public class UnitController {
         }
     }
 
+
+    @PostMapping("")
+    @CheckPermission(value = {"sales:login"})
+    @LogActivity(ActionType.CREATE_UNIT)
+    public ResponseEntity<ReturnObject<Unit>> createUnit(@RequestBody CreateUnitRequestDTO request) {
+        ReturnObject<Unit> result = unitService.createUnit(request);
+        if (!result.getStatus()) {
+            HttpStatus status = result.getMessage() != null
+                    ? HttpStatus.BAD_REQUEST
+                    : HttpStatus.INTERNAL_SERVER_ERROR;
+            return ResponseEntity.status(status).body(result);
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(result);
+    }
 
     @PutMapping("/{unitId}/status")
     public ResponseEntity<ReturnObject<Unit>> changeUnitStatus(@PathVariable Integer unitId,

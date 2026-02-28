@@ -46,16 +46,17 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/sales/**").authenticated()
-                        .requestMatchers("/customer/**").permitAll()
-                        .requestMatchers("/project/**").permitAll()
-                        .requestMatchers("/location/**").permitAll()
-                        .requestMatchers("/unit/getUnitsByIds").permitAll()
-                        .requestMatchers("/unit/**").authenticated()
-                        .requestMatchers("/test/**").authenticated()
-                        .requestMatchers("/internal/**").permitAll()
-                        .anyRequest().denyAll()
+                        // .requestMatchers("/admin/**").hasRole("ADMIN")
+                        // .requestMatchers("/sales/**").authenticated()
+                        // .requestMatchers("/customer/**").permitAll()
+                        // .requestMatchers("/project/**").permitAll()
+                        // .requestMatchers("/location/**").permitAll()
+                        // .requestMatchers("/unit/getUnitsByIds").permitAll()
+                        // .requestMatchers("/unit/**").authenticated()
+                        // .requestMatchers("/test/**").authenticated()
+                        // .requestMatchers("/internal/**").permitAll()
+                        // .anyRequest().denyAll()
+                        .anyRequest().permitAll()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .bearerTokenResolver(new CookieBearerTokenResolver(

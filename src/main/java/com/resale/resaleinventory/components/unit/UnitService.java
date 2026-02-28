@@ -14,6 +14,7 @@ import com.resale.resaleinventory.components.project.dto.ProjectDTO;
 import com.resale.resaleinventory.components.unit.dto.*;
 import com.resale.resaleinventory.constants.UnitStatus;
 import com.resale.resaleinventory.models.Unit;
+import com.resale.resaleinventory.components.unit.dto.CreateUnitRequestDTO;
 import com.resale.resaleinventory.repositories.*;
 import com.resale.resaleinventory.utils.MessageUtil;
 import com.resale.resaleinventory.utils.PaginatedResponseDTO;
@@ -407,6 +408,77 @@ public class UnitService {
         return response;
     }
 
+    public ReturnObject<Unit> createUnit(CreateUnitRequestDTO request) {
+        try {
+            if (request.getProjectId() == null) {
+                return new ReturnObject<>(messageUtil.getMessage("unit.create.project.required"), false, null);
+            }
+            if ((request.getNameEn() == null || request.getNameEn().isBlank())
+                    && (request.getNameAr() == null || request.getNameAr().isBlank())) {
+                return new ReturnObject<>(messageUtil.getMessage("unit.create.name.required"), false, null);
+            }
+            if (request.getNameEn() != null && !request.getNameEn().isBlank()
+                    && unitRepository.findByNameEn(request.getNameEn()) != null) {
+                return new ReturnObject<>(messageUtil.getMessage("unit.create.name.duplicate"), false, null);
+            }
+
+            Unit unit = new Unit();
+            unit.setNameEn(request.getNameEn());
+            unit.setNameAr(request.getNameAr());
+            unit.setUsageTypeId(request.getUsageTypeId());
+            unit.setBuildingId(request.getBuildingId());
+            unit.setBusinessEntityId(request.getBusinessEntityId());
+            unit.setProjectId(request.getProjectId());
+            unit.setModelId(request.getModelId());
+            unit.setFloorNo(request.getFloorNo());
+            unit.setCoordinatesX(request.getCoordinatesX());
+            unit.setCoordinatesY(request.getCoordinatesY());
+            unit.setArea(request.getArea());
+            unit.setBasePrice(request.getBasePrice());
+            unit.setStatus(UnitStatus.AVAILABLE);
+            unit.setStatusDesc(UnitStatus.getStatusDescription(UnitStatus.AVAILABLE));
+            unit.setCurrentViewersCount(0);
+            unit.setAddress(request.getAddress());
+            unit.setAddressAr(request.getAddressAr());
+            unit.setBalcony(request.getBalcony());
+            unit.setBathroom(request.getBathroom());
+            unit.setDelivery(request.getDelivery());
+            unit.setDeliveryDate(request.getDeliveryDate());
+            unit.setDeliveryTextAr(request.getDeliveryTextAr());
+            unit.setDeliveryText(request.getDeliveryText());
+            unit.setDownPayment(request.getDownPayment());
+            unit.setFAc(request.getFAc());
+            unit.setFClub(request.getFClub());
+            unit.setFGarage(request.getFGarage());
+            unit.setFStorage(request.getFStorage());
+            unit.setGarden(request.getGarden());
+            unit.setKitchen(request.getKitchen());
+            unit.setMeasUnit(request.getMeasUnit());
+            unit.setNumberOfRooms(request.getNumberOfRooms());
+            unit.setOldUnitCode(request.getOldUnitCode());
+            unit.setRegion(request.getRegion());
+            unit.setRentalUnit(request.getRentalUnit());
+            unit.setReservationAmount(request.getReservationAmount());
+            unit.setRuView(request.getRuView());
+            unit.setRuViewDesc(request.getRuViewDesc());
+            unit.setSubregion(request.getSubregion());
+            unit.setUnitDesc(request.getUnitDesc());
+            unit.setUnitModel(request.getUnitModel());
+            unit.setUtility(request.getUtility());
+            unit.setNumberOfFloors(request.getNumberOfFloors());
+            unit.setUnitModelCode(request.getUnitModelCode());
+            unit.setVirtualTourUrl(request.getVirtualTourUrl());
+
+            Unit saved = unitRepository.save(unit);
+            return new ReturnObject<>(messageUtil.getMessage("unit.create.success"), true, saved);
+        } catch (Exception e) {
+            return new ReturnObject<>(
+                    messageUtil.getMessage("unit.create.fail") + ": " + e.getMessage(),
+                    false,
+                    null
+            );
+        }
+    }
 
 }
 
